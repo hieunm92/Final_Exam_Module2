@@ -1,22 +1,31 @@
+package view;
+
+import model.Contact;
+import service.ManageContacts;
+
 import java.util.Scanner;
 
 public class TestMain {
     static Scanner scanner = new Scanner(System.in);
     static ManageContacts manageContacts = new ManageContacts();
-    static final String REGEX_PHONE_NUMBER = "^[0-9]{10}$";
-    public static final String REGEX_EMAIL = "^[A-Za-z0-9]{1,}.@gmail.com$";
+    private static final String REGEX_PHONE_NUMBER = "^[0-9]{10}$";
+    private static final String REGEX_EMAIL = "^[A-Za-z0-9]{1,}.@gmail.com$";
+    private static final String REGEX_VALID_BIRTHDAY = "^[\\d]{1,2}(/)[\\d]{1,2}(/)[\\d]{4}$";
 
     public static void main(String[] args) {
         int choise;
         do {
-            System.out.println("1.Thêm mới danh sách");
-            System.out.println("2.Hiển thị danh sách");
-            System.out.println("3.Cập nhật danh sách");
-            System.out.println("4.Xoá");
-            System.out.println("5.Tìm kiếm");
-            System.out.println("6.Ghi File");
-            System.out.println("7.Đọc File");
-            System.out.println("0.Thoat");
+            System.out.println("|=========MENU======= |");
+            System.out.println("|1.Thêm mới danh sách |");
+            System.out.println("|2.Hiển thị danh sách |");
+            System.out.println("|3.Cập nhật danh sách |");
+            System.out.println("|4.Xoá                |");
+            System.out.println("|5.Tìm kiếm           |");
+            System.out.println("|6.Ghi File           |");
+            System.out.println("|7.Đọc File           |");
+            System.out.println("|0.Thoat              |");
+            System.out.println("|-------------------- |");
+            System.out.println("Xin mời nhập lựa chọn:");
             choise = Integer.parseInt(scanner.nextLine());
             switch (choise) {
                 case 1:
@@ -49,14 +58,14 @@ public class TestMain {
 
     private static void findByPhoneNumber() {
         System.out.println("Nhập số điện thoại muốn tìm");
-        int phoneNumber = Integer.parseInt(scanner.nextLine());
+        String phoneNumber = scanner.nextLine();
         manageContacts.searchContact(phoneNumber);
     }
 
     private static void editContactName() {
-        int phoneNumber;
+        String phoneNumber;
         System.out.println("Nhập số điện thoại cần sửa");
-        phoneNumber = Integer.parseInt(scanner.nextLine()) ;
+        phoneNumber = scanner.nextLine() ;
         System.out.println("Nhập tên cần sửa");
         String fullName =scanner.nextLine() ;
         manageContacts.editContact(phoneNumber,fullName);
@@ -64,7 +73,7 @@ public class TestMain {
 
     private static void deleteContactByPhoneNumber() {
         System.out.println("Nhập số điện thoại muốn xoá");
-        int phoneNumber = Integer.parseInt(scanner.nextLine());
+        String phoneNumber = scanner.nextLine();
         manageContacts.deleteContact(phoneNumber);
     }
 
@@ -78,13 +87,11 @@ public class TestMain {
 
     public static void addConTact() {
         Scanner sc = new Scanner(System.in);
-        String number = "";
-        int phoneNumber = 0;
+        String phoneNumber;
         do {
-            number = sc.nextLine();
             System.out.println("Nhập số điện thoại 10 số");
-            phoneNumber = Integer.parseInt(number);
-        }while (!number.matches(REGEX_PHONE_NUMBER));
+            phoneNumber = sc.nextLine();
+        }while (!phoneNumber.matches(REGEX_PHONE_NUMBER));
         System.out.println("Nhập tên nhóm");
         String group = sc.nextLine();
         System.out.println("Nhập họ và tên");
@@ -93,8 +100,12 @@ public class TestMain {
         String sex = sc.nextLine();
         System.out.println("Nhập địa chỉ");
         String address = scanner.nextLine();
-        System.out.println("Nhập ngày tháng năm sinh");
-        String birthday = sc.nextLine();
+        String birthday = "";
+        do {
+            System.out.println("Nhập ngày tháng năm sinh");
+             birthday = sc.nextLine();
+        }while (!birthday.matches(REGEX_VALID_BIRTHDAY));
+
         String email = "";
         do {
             System.out.println("Nhap Email");
@@ -102,5 +113,6 @@ public class TestMain {
         }while (!email.matches(REGEX_EMAIL));
         Contact contact = new Contact(phoneNumber, group, fullName, sex, address, birthday, email);
         manageContacts.addContact(contact);
+        System.err.println("=====------------------=====");
     }
 }

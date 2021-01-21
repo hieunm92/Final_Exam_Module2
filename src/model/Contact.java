@@ -1,5 +1,9 @@
-public class Contact {
-    private int phoneNumber;
+package model;
+
+import java.io.Serializable;
+
+public class Contact implements Serializable {
+    private String phoneNumber;
     private String group;
     private String fullName;
     private String sex;
@@ -10,7 +14,7 @@ public class Contact {
     public Contact() {
     }
 
-    public Contact(int phoneNumber, String group, String fullName, String sex, String address, String birthday, String email) {
+    public Contact(String phoneNumber, String group, String fullName, String sex, String address, String birthday, String email) {
         this.phoneNumber = phoneNumber;
         this.group = group;
         this.fullName = fullName;
@@ -20,11 +24,11 @@ public class Contact {
         this.email = email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -78,7 +82,7 @@ public class Contact {
 
     @Override
     public String toString() {
-        return "Contact{" +
+        return "Model.Contact{" +
                 "phoneNumber=" + phoneNumber +
                 ", group='" + group + '\'' +
                 ", fullName='" + fullName + '\'' +

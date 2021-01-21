@@ -1,6 +1,10 @@
+package service;
+
+import model.Contact;
+import storage.WriteAndReadFile;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class ManageContacts {
     List<Contact> contactList = new ArrayList<>();
@@ -11,29 +15,39 @@ public class ManageContacts {
     }
 
     public void showAll() {
-        System.out.printf("%-20s%-20s%-20s%-20s%-20s\n", "Phone Number", "Group", "FullName", "Sex", "Address");
+        System.out.printf("%-20s%-20s%-20s%-20s%-20s%-20s%-20s\n",
+                "Phone Number",
+                "Group",
+                "FullName",
+                "Sex",
+                "Address",
+                "Birthday",
+                "Email");
+
         for (Contact contact : contactList) {
-            System.out.printf("%-20s%-20s%-20s%-20s%-20s\n",
+            System.out.printf("%-20s%-20s%-20s%-20s%-20s%-20s%-20s\n",
                     contact.getPhoneNumber(),
                     contact.getGroup(),
                     contact.getFullName(),
                     contact.getSex(),
-                    contact.getAddress());
+                    contact.getAddress(),
+                    contact.getBirthday(),
+                    contact.getEmail());
 
         }
     }
 
-    public void editContact(int phoneNumber, String fullName){
+    public void editContact(String phoneNumber, String fullName) {
         for (Contact contact : contactList) {
-            if (contact.getPhoneNumber()==phoneNumber){
+            if (contact.getPhoneNumber().equalsIgnoreCase(phoneNumber)) {
                 contact.setFullName(fullName);
             }
         }
     }
 
-    public void searchContact(int phoneNumber) {
+    public void searchContact(String phoneNumber) {
         for (Contact contact : contactList) {
-            if (contact.getPhoneNumber()== phoneNumber) {
+            if (contact.getPhoneNumber().equalsIgnoreCase(phoneNumber)) {
                 System.out.println(contact);
                 return;
             }
@@ -42,18 +56,14 @@ public class ManageContacts {
     }
 
 
-
-    public void deleteContact(int phoneNumber) {
-        for (Contact contact: contactList) {
-            if (contact.getPhoneNumber()==phoneNumber){
+    public void deleteContact(String phoneNumber) {
+        for (Contact contact : contactList) {
+            if (contact.getPhoneNumber().equalsIgnoreCase(phoneNumber)) {
                 contactList.remove(contact);
             }
         }
     }
 
-    public void searchNumberPhone() {
-
-    }
 
     public void writeFile() {
         WriteAndReadFile.writeFile(contactList, FILE_CONTACT);
